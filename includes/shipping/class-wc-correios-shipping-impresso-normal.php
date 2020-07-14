@@ -19,22 +19,22 @@ class WC_Correios_Shipping_Impresso_Normal extends WC_Correios_Shipping_Impresso
 	/**
 	 * Additional cost per kg or fraction.
 	 *
-	 * Cost based in 01/02/2017 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/impresso-normal
+	 * Cost based in 05/02/2020 from:
+	 * https://www.correios.com.br/enviar-e-receber/marketing-direto/impressos/impresso-normal
 	 *
 	 * @var float
 	 */
-	protected $additional_cost_per_kg = 4.05;
+	protected $additional_cost_per_kg = 4.85;
 
 	/**
 	 * Weight limit for this shipping method.
 	 *
-	 * Value based in 01/02/2017 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/impresso-normal
+	 * Value based in 05/02/2020 from:
+	 * https://www.correios.com.br/enviar-e-receber/marketing-direto/impressos/impresso-normal
 	 *
 	 * @var float
 	 */
-	protected $shipping_method_weight_limit = 20000.000;
+	protected $shipping_method_weight_limit = 2000.000;
 
 	/**
 	 * Initialize Impresso Normal.
@@ -44,41 +44,54 @@ class WC_Correios_Shipping_Impresso_Normal extends WC_Correios_Shipping_Impresso
 	public function __construct( $instance_id = 0 ) {
 		$this->id           = 'correios-impresso-normal';
 		$this->method_title = __( 'Impresso Normal', 'woocommerce-correios' );
-		$this->more_link    = 'http://www.correios.com.br/para-voce/correios-de-a-a-z/impresso-normal';
+		$this->more_link    = 'https://www.correios.com.br/a-a-z/impresso-normal';
 
 		parent::__construct( $instance_id );
 	}
 
 	/**
+	 * Get additional costs per kg or fraction.
+	 *
+	 * Cost based in 01/02/2018 from:
+	 * https://www.correios.com.br/precos-e-prazos/servicos-nacionais/impresso-normal
+	 *
+	 * @return float
+	 */
+	protected function get_additional_costs_per_kg() {
+		return apply_filters( 'woocommerce_correios_impresso_additional_cost_per_kg',
+			$this->additional_cost_per_kg, $this->id, $this->instance_id );
+	}
+
+	/**
 	 * Get costs.
-	 * Costs based in 01/02/2017 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/impresso-normal
+	 * Costs based in 01/02/2018 from:
+	 * https://www.correios.com.br/precos-e-prazos/servicos-nacionais/impresso-normal
 	 *
 	 * @return array
 	 */
 	protected function get_costs() {
 		return apply_filters( 'woocommerce_correios_impresso_normal_costs', array(
-			'20'  => 1.05,
-			'50'  => 1.60,
-			'100' => 2.10,
-			'150' => 2.55,
-			'200' => 3.00,
-			'250' => 3.50,
-			'300' => 3.95,
-			'350' => 4.40,
-			'400' => 4.90,
-			'450' => 5.40,
-			'500' => 5.90,
-			'550' => 6.25,
-			'600' => 6.70,
-			'650' => 7.15,
-			'700' => 7.50,
-			'750' => 7.90,
-			'800' => 8.30,
-			'850' => 8.75,
-			'900' => 9.25,
-			'950' => 9.65,
-			'1000' => 10.05,
+			'20'  => 1.30,
+			'50'  => 1.95,
+			'100' => 2.50,
+			'150' => 3.05,
+			'200' => 3.65,
+			'250' => 4.20,
+			'300' => 4.75,
+			'350' => 5.25,
+			'400' => 5.90,
+			'450' => 6.50,
+			'500' => 7.10,
+			'550' => 7.50,
+			'600' => 8.10,
+			'650' => 8.60,
+			'700' => 9.00,
+			'750' => 9.50,
+			'800' => 9.95,
+			'850' => 10.55,
+			'900' => 11.15,
+			'950' => 11.60,
+			'1000' => 12.05,
 		), $this->id, $this->instance_id );
 	}
 
@@ -112,7 +125,7 @@ class WC_Correios_Shipping_Impresso_Normal extends WC_Correios_Shipping_Impresso
 			return 0;
 		}
 
-		$weight += wc_format_decimal($this->extra_weight);
+		$weight += wc_format_decimal( $this->extra_weight );
 
 		if ( $weight <= $this->shipping_method_weight_limit ) {
 			if ( $weight > 2000 ) {
@@ -128,12 +141,14 @@ class WC_Correios_Shipping_Impresso_Normal extends WC_Correios_Shipping_Impresso
 				$additional_weight_gs = $weight;
 			}
 
+			$additional_costs_per_kg = $this->get_additional_costs_per_kg();
+
 			foreach ( $this->get_costs() as $cost_weights => $costs ) {
 				if ( $additional_weight_gs <= $cost_weights ) {
 					$cost = $costs;
 
 					if ( $additional_weight_kgs > 0 ) {
-						$cost += $additional_weight_kgs * $this->additional_cost_per_kg;
+						$cost += $additional_weight_kgs * $additional_costs_per_kg;
 					}
 
 					if ( $weight > $this->reasonable_registry_weight_limit || 'yes' === $this->own_hands || 'RN' === $this->registry_type ) {

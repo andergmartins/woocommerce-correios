@@ -21,52 +21,52 @@ abstract class WC_Correios_Shipping_Impresso extends WC_Correios_Shipping_Carta 
 	/**
 	 * National Registry cost.
 	 *
-	 * Cost based in 01/10/2016 from:
-	 * http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais
+	 * Cost based in 05/02/2020 from:
+	 * https://correios.com.br/enviar-e-receber/servicos-adicionais/preco-de-registro
 	 *
 	 * @var float
 	 */
-	protected $national_registry_cost = 4.30;
+	protected $national_registry_cost = 6.35;
 
 	/**
 	 * Reasonable Registry cost.
 	 *
-	 * Cost based in 01/10/2016 from:
-	 * http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais
+	 * Cost based in 05/02/2020 from:
+	 * https://correios.com.br/enviar-e-receber/servicos-adicionais/preco-de-registro
 	 *
 	 * @var float
 	 */
-	protected $reasonable_registry_cost = 2.15;
+	protected $reasonable_registry_cost = 3.20;
 
 	/**
 	 * Receipt Notice cost.
 	 *
-	 * Cost based in 01/10/2016 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais
+	 * Cost based in 05/02/2020 from:
+	 * https://correios.com.br/enviar-e-receber/servicos-adicionais/preco-de-aviso-de-recebimento
 	 *
 	 * @var float
 	 */
-	protected $receipt_notice_cost = 4.30;
+	protected $receipt_notice_cost = 6.35;
 
 	/**
 	 * Own Hands cost.
 	 *
-	 * Cost based in 01/10/2016 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais
+	 * Cost based in 05/02/2020 from:
+	 * https://correios.com.br/enviar-e-receber/servicos-adicionais/precos-de-mao-propria
 	 *
 	 * @var float
 	 */
-	protected $own_hands_cost = 5.50;
+	protected $own_hands_cost = 7.50;
 
 	/**
 	 * Weight limit for reasonable registry.
 	 *
-	 * Value based in 01/02/2017 from:
-	 * https://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/impresso-normal
+	 * Value based in 01/02/2018 from:
+	 * https://www.correios.com.br/precos-e-prazos/servicos-nacionais/impresso-normal
 	 *
 	 * @var float
 	 */
-	protected $reasonable_registry_weight_limit = 500.000;
+	protected $reasonable_registry_weight_limit = 2000.000;
 
 	/**
 	 * Initialize Impresso shipping method.
